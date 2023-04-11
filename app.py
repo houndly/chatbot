@@ -11,15 +11,10 @@ run_with_ngrok(app)
 def reply():
     incoming_msg = request.form.get("Body").lower()
     response = MessagingResponse()
-    message = response.message()
-    responded = False
-    words = incoming_msg.split("")
-    if "hola" in words:
-        message.body("Hola, soy un bot de prueba")
-        responded = True
-
-    if not responded:
-        message.body("No se que decir")
+    words = incoming_msg.split(" ")
+    if words:
+        resp_txt = "Hello World"
+        response.message(resp_txt)
 
     return str(response)
 
