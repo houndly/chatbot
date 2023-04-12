@@ -1,0 +1,28 @@
+name: Deploy to App Engine
+
+on:
+  push:
+    branches:
+      - develop
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Google Cloud SDK
+      uses: google-github-actions/deploy-appengine@v0.4.0
+      with:
+         project_id: my-gae-project-id
+         version: master
+         credentials: ${{secrets.GOOGLE_APP_ENGINE_KEY}}
+         flags: --no-cache
+         deliverables: app.yaml
+          
+    - name: Deploy to App Engine
+      run:
+        gcloud app deploy
+
