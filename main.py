@@ -18,7 +18,7 @@ def reply():
 
 @app.route("/status", methods=["GET"])
 def status():
-    return "OK JORGE"
+    return "OK JORGE World"
 
 
 if __name__ == "__main__":
