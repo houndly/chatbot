@@ -15,6 +15,7 @@ def reply():
 
     return str(response)
 
+
 @app.route("/status", methods=["GET"])
 def status():
     return "OK"
