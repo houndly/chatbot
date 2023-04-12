@@ -3,7 +3,7 @@ name: Deploy to App Engine
 on:
   push:
     branches:
-      - main
+      - develop
 
 jobs:
   deploy:
@@ -25,6 +25,6 @@ jobs:
     - name: Deploy to App Engine
       uses: GoogleCloudPlatform/github-actions/app-engine-deploy@master
       with:
-        project_id: houndly-chatbot
+        project_id: my-project-id
         version: ${{ github.sha }}
         service_account_key: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
