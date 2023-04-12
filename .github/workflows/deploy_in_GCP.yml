@@ -3,28 +3,28 @@ name: Deploy to App Engine
 on:
   push:
     branches:
-      - develop
+      - main
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Set up Google Cloud SDK
-      uses: google-github-actions/deploy-appengine@v0.4.0
+    - name: Set up Python
+      uses: actions/setup-python@v2
       with:
-         project_id: houndly-chatbot
-         version: master
-         credentials: ${{secrets.GOOGLE_APP_ENGINE_KEY}}
-         flags: --no-cache
-         deliverables: app.yaml
-          
-    - name: Authenticate with service account
+        python-version: '3.8'
+
+    - name: Install dependencies
       run: |
-        gcloud auth activate-service-account --key-file=${{secrets.GOOGLE_APP_ENGINE_KEY}}
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
     - name: Deploy to App Engine
-      run:
-          gcloud app deploy
+      uses: GoogleCloudPlatform/github-actions/app-engine-deploy@master
+      with:
+        project_id: houndly-chatbot
+        version: ${{ github.sha }}
+        service_account_key: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
