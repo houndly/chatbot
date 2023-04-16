@@ -259,4 +259,10 @@ poetry.toml
 # LSP config files
 pyrightconfig.json
 
+# IDE and code editor
+.vscode
+
+# Credentials file
+google_sheets_credentials.json
+
 # End of https://www.toptal.com/developers/gitignore/api/python,flask
