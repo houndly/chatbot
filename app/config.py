@@ -2,12 +2,14 @@
 	Module to handle environments configurations
 """
 
-from app.common.constants import CredentialsFiles
+from app.common.constants import GOOGLE_SHEETS
 
 
 class Config(object):
     DEBUG = False
     TESTING = False
+    GOOGLE_SHEETS_CREDS_FILE = 	GOOGLE_SHEETS
+
     # SECRET_KEY = os.environ.get('SECRET_KEY', 'my_secret_key')
 
 # class ProductionConfig(Config):

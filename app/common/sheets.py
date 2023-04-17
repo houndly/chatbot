@@ -1,66 +1,47 @@
 """
 	This module implements google sheets handle data
 """
-import os.path
-from typing import List
-from google.auth.transport.requests import Request
-from google.oauth2.credentials import Credentials
-from google_auth_oauthlib.flow import InstalledAppFlow
-from app.common.constants import CredentialsFiles
-from googleapiclient.discovery import build
-from googleapiclient.errors import HttpError
+
+import gspread
+from oauth2client.service_account import ServiceAccountCredentials
+from app import app
 
 # Google Sheet credentials
-SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
-SPREADSHEET_ID = '1FUrbjPW4pcSNh43zp2dIK3YyQNgQ7BQZ613CU7ugz2E' # TODO: ADD into .env file
-RANGE_NAME = 'Class Data!A2:E'
+SCOPES = [
+    'https://www.googleapis.com/auth/spreadsheets',
+    'https://www.googleapis.com/auth/drive'
+]
+CREDS = ServiceAccountCredentials.from_json_keyfile_name(
+    app.config['GOOGLE_SHEETS'], SCOPES
+)
+client = gspread.authorize(CREDS)
 
-def get_credentials() -> Credentials:
-	"""
-	Get the user's credentials from a file or prompt the user to log in.
-	"""
-	creds = None
-	# Create a temporary token file to handle insertion of data
-	if os.path.exists('token.json'):
-		creds = Credentials.from_authorized_user_file('token.json', SCOPES)
-	if not creds or not creds.valid:
-		if creds and creds.expired and creds.refresh_token:
-			creds.refresh(Request())
-		else:
-			flow = InstalledAppFlow.from_client_secrets_file(CredentialsFiles.GOOGLE_SHEETS, SCOPES)
-			creds = flow.run_local_server(port=0)
-		with open('token.json', 'w') as token:
-			token.write(creds.to_json())
-	return creds
+def get_appointments(spreadsheet_id: str) -> list:
+    """
+        Get all appointments from the given spreadsheet.
 
-def getConnection() -> build:
-	"""
-	Get a connection to a Google Sheets spreadsheet
-	"""
-	credentials = get_credentials()
-	try:
-		service = build('sheets', 'v4', credentials = credentials)
-		# sheet_metadata = {'properties': {'title': 'My Spreadsheet'}}
-		# spreadsheet = service.spreadsheets().create(fields = 'spreadsheetId').execute()
-		# spreadsheet_id = spreadsheet.get('spreadsheetId')
-		# sheet = service.spreadsheets().get(spreadsheetId = spreadsheet_id, includeGridData = True).execute()
-		# sheet_id = sheet['sheets'][0]['properties']['sheetId']
-		return service.spreadsheets()
-	except HttpError as err:
-		print(err)
-		return None
+        Args:
+            spreadsheet_id: The id of the spreadsheet to get the appointments from.
 
-def get_data(range_name: str) -> List[List[str]]:
-	"""
-	Get data from a Google Sheets spreadsheet
-	"""
-	try:
-		service = getConnection()
-		result = service.values().get(spreadsheetId=SPREADSHEET_ID, range=range_name).execute()
-		return result.get('values', [])
-	except HttpError as err:
-		print(err)
-		return None
+        Returns:
+            A list of dictionaries containing the appointments.
+    """
+    sheet = client.open_by_key(spreadsheet_id).sheet1
+    data = sheet.get_all_values()
+    data = data[3:]  # Remove the header and the first empty row
+
+    appointments = []
+    for row in data:
+        appointments.append({
+            "Mascota": row[2],
+            "Fecha": row[5],
+            "Hora": row[6],
+        })
+
+    return appointments
+
+
+
 
 def insert_data(row: List) -> bool:
 	"""

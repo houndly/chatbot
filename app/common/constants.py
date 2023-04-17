@@ -1,13 +1,12 @@
 """
 	Module to locate constant values in the APP
 """
+import os
 from enum import Enum
 
-class CredentialsFiles(Enum):
-  """
-  Enum with credentials files location
-  """
-  GOOGLE_SHEETS = '../../google_sheets_credentials.json'
+# Path to google sheets credentials using os module
+GOOGLE_SHEETS = os.path.join(os.path.dirname(__file__), "credentials.json")
+
 
 class MenuOptions(Enum):
   """
