@@ -8,7 +8,6 @@ from app.common.constants import CredentialsFiles
 class Config(object):
     DEBUG = False
     TESTING = False
-    GOOGLE_SHEETS_CREDS_FILE = 	CredentialsFiles.GOOGLE_SHEETS
     # SECRET_KEY = os.environ.get('SECRET_KEY', 'my_secret_key')
 
 # class ProductionConfig(Config):
