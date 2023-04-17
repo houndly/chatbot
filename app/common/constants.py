@@ -7,7 +7,7 @@ class CredentialsFiles(Enum):
   """
   Enum with credentials files location
   """
-  GOOGLE_SHEETS = '/google_sheets_credentials.json'
+  GOOGLE_SHEETS = '../../google_sheets_credentials.json'
 
 class MenuOptions(Enum):
   """
