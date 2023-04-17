@@ -1,6 +1,7 @@
 """
 	This module implements google sheets handle data
 """
+
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 from app import app
@@ -41,22 +42,15 @@ def get_appointments(spreadsheet_id: str) -> list:
 
 
 
-# TODO: Delete after generate correct usage
-# def main() -> None:
-#     spreadsheet_id = '1LzQJpEUbIvpc2NEJQM8pWvbPv4X6QqCwJ5Z54KSUMiI'
-#     date = '2023-04-10'
-#     time = '10:00 AM'
-#     pet_name = 'Max'
-#     species = 'Dog'
-#     breed = 'Labrador Retriever'
-#     age = 3
-#     sex = 'Male'
-#     owner_name = 'John Doe'
-#     owner_phone = '555-1234'
-#     reason = 'Annual checkup'
-#     notes = 'Max is generally healthy, but has been experiencing some minor digestive issues.'
 
-#     # Register the appointment
-#     register_appointment(spreadsheet_id, date, time, pet_name, species, breed, age, sex, owner_name, owner_phone, reason, notes)
-
-#     print('Appointment registered successfully!')
+def insert_data(row: List) -> bool:
+	"""
+ 	Registers an appointment with the veterinarian
+  """
+	try:
+		sheet = getConnection()
+		# Set row values to insert
+		sheet.values().append(range='Citas!A2', valueInputOption = 'USER_ENTERED', body = {'values': [row]}).execute()
+		return True # Register successfully
+	except:
+		return False # Error register
