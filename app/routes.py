@@ -20,7 +20,7 @@ def bot():
 		Returns:
 			JSON response to show users on WhatsApp
 	"""
-	return str("Hello World") # Handle route
+	return str("Hello World"), 200 # TODO: Handle route
 
 
 @app.route("/status", methods=["GET"])
