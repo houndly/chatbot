@@ -266,3 +266,5 @@ pyrightconfig.json
 google_sheets_credentials.json
 
 # End of https://www.toptal.com/developers/gitignore/api/python,flask
+
+credentials.json

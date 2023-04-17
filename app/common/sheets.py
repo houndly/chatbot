@@ -1,59 +1,45 @@
 """
 	This module implements google sheets handle data
 """
-import os.path
-from typing import List, Dict
-from google.auth.transport.requests import Request
-from google.oauth2.credentials import Credentials
-from google_auth_oauthlib.flow import InstalledAppFlow
-from app.common.constants import CredentialsFiles
-from googleapiclient.discovery import build
-from googleapiclient.errors import HttpError
+import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 from app import app
 
 # Google Sheet credentials
-SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
+SCOPES = [
+    'https://www.googleapis.com/auth/spreadsheets',
+    'https://www.googleapis.com/auth/drive'
+]
 CREDS = ServiceAccountCredentials.from_json_keyfile_name(
-    app.config['GOOGLE_SHEETS_CREDS_FILE'], SCOPES)
+    app.config['GOOGLE_SHEETS'], SCOPES
+)
+client = gspread.authorize(CREDS)
 
-def get_credentials() -> Credentials:
+def get_appointments(spreadsheet_id: str) -> list:
     """
-    Get the user's credentials from a file or prompt the user to log in.
+        Get all appointments from the given spreadsheet.
+
+        Args:
+            spreadsheet_id: The id of the spreadsheet to get the appointments from.
+
+        Returns:
+            A list of dictionaries containing the appointments.
     """
-    creds = None
-    if os.path.exists('token.json'):
-        creds = Credentials.from_authorized_user_file('token.json', SCOPES)
-    if not creds or not creds.valid:
-        if creds and creds.expired and creds.refresh_token:
-            creds.refresh(Request())
-        else:
-            flow = InstalledAppFlow.from_client_secrets_file(CredentialsFiles.GOOGLE_SHEETS, SCOPES)
-            creds = flow.run_local_server(port=0)
-        with open('token.json', 'w') as token:
-            token.write(creds.to_json())
-    return creds
+    sheet = client.open_by_key(spreadsheet_id).sheet1
+    data = sheet.get_all_values()
+    data = data[3:]  # Remove the header and the first empty row
 
-def getConnection(spreadsheet_id: str) -> build:
-    """Get a connection to a Google Sheets spreadsheet"""
-    credentials = get_credentials()
-    try:
-        service = build('sheets', 'v4', credentials=credentials)
-        sheet_metadata = {'properties': {'title': 'My Spreadsheet'}}
-        spreadsheet = service.spreadsheets().create(body=sheet_metadata,fields='spreadsheetId').execute()
-        spreadsheet_id = spreadsheet.get('spreadsheetId')
-        sheet = service.spreadsheets().get(spreadsheetId=spreadsheet_id,includeGridData=True).execute()
-        sheet_id = sheet['sheets'][0]['properties']['sheetId']
-        return service.spreadsheets()
-    except HttpError as err:
-        print(err)
-        return None
+    appointments = []
+    for row in data:
+        appointments.append({
+            "Mascota": row[2],
+            "Fecha": row[5],
+            "Hora": row[6],
+        })
 
-def register_appointment(spreadsheet_id: str, date: str, time: str, pet_name: str, species: str, breed: str, age: int, sex: str, owner_name: str, owner_phone: str, reason: str, notes: str) -> None:
-    """Registers an appointment with the veterinarian"""
-    sheet = getConnection(spreadsheet_id)
-    new_row = [pet_name, species, breed, age, sex, owner_name, owner_phone, date, time, reason, notes]
-    sheet.values().append(spreadsheetId=spreadsheet_id, range='Citas!A2', valueInputOption='USER_ENTERED', body={'values': [new_row]}).execute()
+    return appointments
+
+
 
 # TODO: Delete after generate correct usage
 # def main() -> None:
