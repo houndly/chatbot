@@ -44,4 +44,4 @@ def status():
 		Returns:
 			status: status server
 	"""
-	return jsonify({'status': 'OK'}), 200
+	return jsonify({'status': 'OK UPDATE 17/04/2023'}), 200
