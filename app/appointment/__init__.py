@@ -10,4 +10,4 @@ def register_appointment(appointment: Appointment) -> bool:
 
 	is_register = sheets.insert_data(new_row)
 
-	return is_register # New appointment register successfully
+	return is_register # New appointment register successfully or not
