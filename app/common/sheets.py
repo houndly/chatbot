@@ -37,7 +37,7 @@ def insert_data(spreadsheet_id: str, row: list) -> bool:
 	try:
 		sheet = client.open_by_key(spreadsheet_id).sheet1
 		# Set row values to insert
-		sheet.values().append(range='Citas!A2', valueInputOption = 'USER_ENTERED', body = {'values': [row]}).execute()
+		sheet.append_row(row)
 		return True # Register successfully
 	except:
 		return False # Error register

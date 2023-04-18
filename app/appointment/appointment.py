@@ -12,13 +12,13 @@ class Appointment:
 	"""
 	Appointment entity class
 	"""
-	owner_name: str
-	pet_name: str
-	phone: int
-	document_id: int
-	date: datetime
-	appointment_time: str
-	state: str
+	owner_name: str = None
+	pet_name: str = None
+	phone: int = None
+	document_id: int = None
+	date: datetime = None
+	appointment_time: str = None
+	state: str = None
 
 	def get_data_to_row(self) -> list:
 		"""
