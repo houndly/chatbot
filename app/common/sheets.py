@@ -16,39 +16,26 @@ CREDS = ServiceAccountCredentials.from_json_keyfile_name(
 )
 client = gspread.authorize(CREDS)
 
-def get_appointments(spreadsheet_id: str) -> list:
-    """
-        Get all appointments from the given spreadsheet.
+def get_data(spreadsheet_id: str) -> list:
+	"""
+	Get data from a spreadsheet
 
-        Args:
-            spreadsheet_id: The id of the spreadsheet to get the appointments from.
+	Args:
+		spreadsheet_id: The id of the spreadsheet to get data
 
-        Returns:
-            A list of dictionaries containing the appointments.
-    """
-    sheet = client.open_by_key(spreadsheet_id).sheet1
-    data = sheet.get_all_values()
-    data = data[3:]  # Remove the header and the first empty row
-
-    appointments = []
-    for row in data:
-        appointments.append({
-            "Mascota": row[2],
-            "Fecha": row[5],
-            "Hora": row[6],
-        })
-
-    return appointments
+	Returns:
+		A list of data
+	"""
+	sheet = client.open_by_key(spreadsheet_id).sheet1
+	return sheet.get_all_values()
 
 
-
-
-def insert_data(row: List) -> bool:
+def insert_data(spreadsheet_id: str, row: list) -> bool:
 	"""
  	Registers an appointment with the veterinarian
   """
 	try:
-		sheet = getConnection()
+		sheet = client.open_by_key(spreadsheet_id).sheet1
 		# Set row values to insert
 		sheet.values().append(range='Citas!A2', valueInputOption = 'USER_ENTERED', body = {'values': [row]}).execute()
 		return True # Register successfully
