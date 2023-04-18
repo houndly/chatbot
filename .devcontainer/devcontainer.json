@@ -1,0 +1,22 @@
+{
+   "name":"Custom Default Linux universal",
+   "build":{
+      "dockerfile":"Dockerfile"
+   },
+   "customizations":{
+      "vscode":{
+         "settings":{
+            "workbench.colorTheme":"Default Dark+"
+         },
+         "extensions":[
+            "ms-python.python",
+            "magicstack.magicpython",
+            "lextudio.restructuredtext",
+            "donjayamanne.python-extension-pack",
+            "formulahendry.auto-close-tag",
+            "formulahendry.auto-rename-tag",
+            "tht13.python"
+         ]
+      }
+   }
+}
