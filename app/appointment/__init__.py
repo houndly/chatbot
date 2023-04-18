@@ -4,14 +4,14 @@ from app.appointment.constants import APPOINTMENTS_SHEET_ID, AppointmentStateTyp
 from app.common.sheets import get_data, insert_data
 
 
-def register_appointment(appointment: Appointment) -> bool:
+def register_appointment(appointment: Appointment, sheet_id: str) -> bool:
 	"""
  	Registers an appointment with the veterinarian
   """
 	# Set row values to insert
 	new_row = appointment.get_data_to_row()
 
-	is_register = insert_data(new_row)
+	is_register = insert_data(sheet_id, new_row)
 
 	return is_register # New appointment register successfully or not
 

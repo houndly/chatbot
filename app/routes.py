@@ -22,7 +22,7 @@ def bot():
 		Returns:
 			JSON response to show users on WhatsApp
 	"""
-	incoming_msg = request.form.get('Body').lower()
+	incoming_msg = request.form
 	return handle_menu(incoming_msg)
 
 
