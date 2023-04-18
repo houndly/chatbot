@@ -23,7 +23,7 @@ def handle_menu(incoming_msg: str) -> str:
 		return ask_for_user_id(response)
 
 	if incoming_msg == NEW_APPOINTMENT:
-		return ask_for_appointment_data
+		return ask_for_appointment_data()
 
 
 def ask_for_user_id(message_response: MessagingResponse) -> str:
