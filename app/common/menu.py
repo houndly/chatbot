@@ -7,25 +7,23 @@ Possible options:
 	NEW_APPOINTMENT: Set new appointment
 """
 
-from app.appointment import get_appointments
-from app.common.constants import MenuOptions
 from twilio.twiml.messaging_response import MessagingResponse
+from app.appointment import get_appointments
+from app.common.constants import CHECK_APPOINTMENTS, NEW_APPOINTMENT
 
 
 def handle_menu(incoming_msg: str) -> str:
 	response = MessagingResponse() # Twilio response object
 
-	if incoming_msg not in [MenuOptions.CHECK_APPOINTMENTS, MenuOptions.NEW_APPOINTMENT]:
+	if incoming_msg not in [CHECK_APPOINTMENTS, NEW_APPOINTMENT]:
 		response.message("Hola, gracias por escribirnos. Empecemos eligiendo una opción del menú: \n 1. Consultar citas \n 2. Agendar cita")
 		return str(response)
 
-	switcher = {
-		MenuOptions.CHECK_APPOINTMENTS: ask_for_user_id(response),
-		MenuOptions.NEW_APPOINTMENT: ask_for_appointment_data
-	}
+	if incoming_msg == CHECK_APPOINTMENTS:
+		return ask_for_user_id(response)
 
-	option = switcher.get(int(str(incoming_msg)))
-	return option
+	if incoming_msg == NEW_APPOINTMENT:
+		return ask_for_appointment_data
 
 
 def ask_for_user_id(message_response: MessagingResponse) -> str:

@@ -1,6 +1,6 @@
 import app.common.constants as common_constants
 from app.appointment.appointment import Appointment
-from app.appointment.constants import APPOINTMENTS_SHEET_ID
+from app.appointment.constants import APPOINTMENTS_SHEET_ID, AppointmentStateType
 from app.common.sheets import get_data, insert_data
 
 
@@ -35,7 +35,8 @@ def get_appointments() -> list[Appointment]:
 			date=row[common_constants.DATE_COLUMN_ORDER],
 			phone=row[common_constants.PHONE_COLUMN_ORDER],
 			document_id=row[common_constants.DOCUMENT_COLUMN_ORDER],
-			# state=row[common_constants.STATE_COLUMN_ORDER]
+			state='test' # Modify using data from Sheets
+			
 		)
 		appointments.append(new_appointment)
 

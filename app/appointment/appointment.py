@@ -18,7 +18,7 @@ class Appointment:
 	document_id: int
 	date: datetime
 	appointment_time: str
-	state: AppointmentStateType
+	state: str
 
 	def get_data_to_row(self) -> list:
 		"""

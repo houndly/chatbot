@@ -9,4 +9,4 @@ app = Flask(__name__)
 app.config.from_object(config)
 
 # Import routes to handle on Flask APP
-import app.routes
+from app import routes

@@ -6,6 +6,7 @@
 		/status: Returns the status of the server.
 """
 
+from datetime import datetime
 from flask import request, jsonify
 from app.common.menu import handle_menu
 from app import app
@@ -24,6 +25,7 @@ def bot():
 	incoming_msg = request.form.get('Body').lower()
 	return handle_menu(incoming_msg)
 
+
 @app.route("/status", methods=["GET"])
 def status():
 	"""
@@ -32,4 +34,5 @@ def status():
 		Returns:
 			status: status server
 	"""
-	return jsonify({'status': 'OK UPDATE 17/04/2023'}), 200
+	return jsonify({'status': f'OK - {datetime.now().strftime("%a %d|%m|%Y %H:%M:%S")}'}), 200
+
