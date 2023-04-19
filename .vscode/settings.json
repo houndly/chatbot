@@ -1,0 +1,11 @@
+{
+  "files.exclude": {
+    ".venv": true,
+    ".devcontainer": false,
+    "**.yaml": true,
+    "requirements.txt": true,
+    "runtime.txt": true,
+    ".github": true,
+    "**/__pycache__": true,
+  },
+}

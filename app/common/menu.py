@@ -9,90 +9,107 @@ Possible options:
 
 from twilio.twiml.messaging_response import MessagingResponse
 from app.appointment import get_appointments, register_appointment
+from app.appointment.appointment_form import AppointmentForm
 from app.common.constants import CHECK_APPOINTMENTS, NEW_APPOINTMENT
-from app.appointment.appointment import Appointment
 from app.appointment.constants import APPOINTMENTS_SHEET_ID
-from app.appointment.constants import AppointmentStateType
-
-user_state = {}
 
 
-def handle_menu(incoming_msg: dict[str, str]) -> str:
+# Instance for handle Appointment form
+appointment_form: AppointmentForm = AppointmentForm()
+# Initial menu message
+initial_msg: str = "Hola, gracias por escribirnos. Empecemos eligiendo una opción del menú: \n 1. Consultar citas \n 2. Agendar cita"
+# Error message
+error_msg: str = "¡Ups! Algo salió mal. Intenta de nuevo más tarde."
+# Indicates user finished his task and is available con continue again with chat
+continue_chat: bool = False
+
+
+def handle_menu(incoming_msg: dict[str, str]):
+    """
+    Handle menu options based on user process
+    """
+    global continue_chat
+
     response = MessagingResponse()  # Twilio response object
     body: str = incoming_msg.get("Body").lower()
     from_number: str = incoming_msg.get("WaId")
-    if "new_appointment_state" in user_state:
-        return ask_for_appointment_data(response, body, from_number)
 
-    if body not in [CHECK_APPOINTMENTS, NEW_APPOINTMENT]:
-        response.message(
-            "Hola, gracias por escribirnos. Empecemos eligiendo una opción del menú: \n 1. Consultar citas \n 2. Agendar cita"
-        )
+    if continue_chat:
+        continue_chat = False
+        if body.lower() == 'y':
+            return str(response.message(initial_msg))
+        elif body.lower() == 'n':
+            return str(response.message("Gracias por preferirnos !"))
+        else:
+            return str(response.message(error_msg))
+
+    elif appointment_form.is_handle_new_appointment:
+        return ask_for_appointment_data(response, body)
+
+    elif body not in [CHECK_APPOINTMENTS, NEW_APPOINTMENT]:
+        return str(response.message(initial_msg))
+
     elif body == CHECK_APPOINTMENTS:
-        return ask_for_user_id()
+        return ask_for_user_id(response)
 
     elif body == NEW_APPOINTMENT:
+        appointment_form.is_handle_new_appointment = True
+        appointment_form.set_data_message(from_number)  # Set user number
+        response.message("Vamos a agendar una nueva cita")
+        return ask_for_appointment_data(response, body)
 
-        user_state["new_appointment_state"] = "ask_name"
-        response.message("Vamos a agendar una nueva cita. ¿Cuál es tu nombre?")
-
-    return str(response)
+    return str(error_msg)
 
 
-def ask_for_user_id() -> str:
+def ask_for_user_id(message_response: MessagingResponse) -> str:
     """
     Ask for user ID to search information based on this data
     """
-    response = MessagingResponse()
+
     appointments = get_appointments()
     if appointments:
-        response.message("Estas son tus citas: ")
+        message_response.message("Estas son tus citas: ")
 
         for appointment in appointments:
-            response.message(appointment.get_appointment_info())
+            message_response.message(appointment.get_appointment_info())
 
-    return str(response)
+        ask_for_more_process(message_response)
+
+    return str(message_response)
 
 
-def ask_for_appointment_data(message_response: MessagingResponse, body: str, from_number: str) -> str:
+def ask_for_appointment_data(message_response: MessagingResponse, body: str) -> str:
     """
-    Ask for data to add into new appointment
+    Ask for data to save a new appointment
     """
-    if user_state["new_appointment_state"] == "ask_name":
-        user_state["new_appointment_state"] = "ask_pet_name"
-        user_state["name"] = body
-        message_response.message("¿Cuál es el nombre de tu mascota?")
-    elif user_state["new_appointment_state"] == "ask_pet_name":
-        user_state["new_appointment_state"] = "ask_document_id"
-        user_state["pet_name"] = body
-        message_response.message("¿Cuál es tu número de documento?")
-    elif user_state["new_appointment_state"] == "ask_document_id":
-        user_state["new_appointment_state"] = "ask_date"
-        user_state["document_id"] = body
-        message_response.message(
-            "¿En qué fecha quieres la cita? \n(dd/mm/aaaa)"
-        )
-    elif user_state["new_appointment_state"] == "ask_date":
-        user_state["new_appointment_state"] = None
-        user_state["appointment_date"] = body
-        message_response.message("¿A qué hora? \n(hh:mm)")
-    else:
-        user_state["appointment_time"] = body
-        user_state["phone"] = from_number
-        appointment = Appointment(
-            owner_name=user_state["name"],
-            pet_name=user_state["pet_name"],
-            phone=user_state["phone"],
-            document_id=user_state["document_id"],
-            date=user_state["appointment_date"],
-            appointment_time=user_state["appointment_time"],
-            state="Pendiente"
-        )
-        is_registered = register_appointment(appointment, APPOINTMENTS_SHEET_ID)
+
+    appointment_form.set_data_message(body)
+    message_to_show = appointment_form.get_state_message()
+
+    if (message_to_show == '' and appointment_form.is_complete_data()):
+        appointment_form.is_handle_new_appointment = False  # Appointment data handle
+        is_registered = register_appointment(
+            appointment_form.appointment, APPOINTMENTS_SHEET_ID)
+
         if is_registered:
             message_response.message("¡Gracias! Hemos agendado tu cita.")
+            ask_for_more_process(message_response)
+
         else:
-            message_response.message(
-                "¡Ups! Algo salió mal. Intenta de nuevo más tarde."
-            )
+            message_response.message(error_msg)
+    else:
+        message_response.message(message_to_show)
+
+    return str(message_response)
+
+
+def ask_for_more_process(message_response: MessagingResponse) -> str:
+    """
+    Ask user if it is necessary to continue shwoing the menu
+    """
+    global continue_chat
+
+    continue_chat = True
+    message_response.message(
+        "Indicanos si deseas continuar chateando con nosotros (Y/n)")
     return str(message_response)

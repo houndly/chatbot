@@ -151,9 +151,6 @@ poetry.toml
 # LSP config files
 pyrightconfig.json
 
-# IDE and code editor
-.vscode
-
 # Credentials file
 google_sheets_credentials.json
 credentials.json

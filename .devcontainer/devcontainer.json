@@ -1,22 +1,31 @@
 {
-   "name":"Custom Default Linux universal",
-   "build":{
-      "dockerfile":"Dockerfile"
-   },
-   "customizations":{
-      "vscode":{
-         "settings":{
-            "workbench.colorTheme":"Default Dark+"
-         },
-         "extensions":[
-            "ms-python.python",
-            "magicstack.magicpython",
-            "lextudio.restructuredtext",
-            "donjayamanne.python-extension-pack",
-            "formulahendry.auto-close-tag",
-            "formulahendry.auto-rename-tag",
-            "tht13.python"
-         ]
+  "name": "Python Development",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python",
+        "magicstack.magicpython",
+        "lextudio.restructuredtext",
+        "donjayamanne.python-extension-pack",
+        "oderwat.indent-rainbow"
+      ],
+      "settings": {
+        "files.exclude": {
+          ".venv": true,
+          ".devcontainer": false,
+          "**.yaml": true,
+          "requirements.txt": true,
+          "runtime.txt": true,
+          ".github": true
+        },
+        "editor.tabSize": 4,
+        "editor.formatOnSave": true,
+        "editor.indentSize": "tabSize"
       }
-   }
+    }
+  },
+  "onCreateCommand": "pip3 install -r requirements.txt"
 }
