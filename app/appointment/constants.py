@@ -1,15 +1,8 @@
-from enum import Enum
-
-class AppointmentStateType(Enum):
-  """
-  Enum with valid states for appointment
-
-  This information is based on Sheets states values
-  """
-  PENDING: "Pendiente"
-  CANCEL: "Cancelada"
-  DONE: "Realizada"
-  BREACH: "Incumplimiento"
+# Appointment state possible values
+PENDING = 'Pendiente'
+CANCEL = 'Cancelada'
+DONE = 'Realizada'
+BREACH = 'Incumplimiento'
 
 # ID of the sheet to handle CRUD of appointments
 APPOINTMENTS_SHEET_ID = '13IogyxGONgFFCOlz5U2z1aLHz6BfSXKddrIoboqB6H4'

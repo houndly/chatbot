@@ -16,28 +16,34 @@ CREDS = ServiceAccountCredentials.from_json_keyfile_name(
 )
 client = gspread.authorize(CREDS)
 
+
 def get_data(spreadsheet_id: str) -> list:
-	"""
-	Get data from a spreadsheet
+    """
+    Get data from a spreadsheet
 
-	Args:
-		spreadsheet_id: The id of the spreadsheet to get data
+    Args:
+            spreadsheet_id: The id of the spreadsheet to get data
 
-	Returns:
-		A list of data
-	"""
-	sheet = client.open_by_key(spreadsheet_id).sheet1
-	return sheet.get_all_values()
+    Returns:
+            A list of data
+    """
+    sheet = client.open_by_key(spreadsheet_id).sheet1
+    values = sheet.get_all_values()
+    app.logger.info(values)
+    return values
 
 
 def insert_data(spreadsheet_id: str, row: list) -> bool:
-	"""
- 	Registers an appointment with the veterinarian
-  """
-	try:
-		sheet = client.open_by_key(spreadsheet_id).sheet1
-		# Set row values to insert
-		sheet.append_row(row)
-		return True # Register successfully
-	except:
-		return False # Error register
+    """
+    Registers an appointment with the veterinarian
+    """
+
+    try:
+        sheet = client.open_by_key(spreadsheet_id).sheet1
+        # Set row values to insert
+        sheet.append_row(row)
+        app.logger.info(f'Data saved: {row}')
+        return True  # Register successfully
+    except:
+        app.logger.error(f'Error saving data: {row}')
+        return False  # Error register
