@@ -27,5 +27,8 @@
       }
     }
   },
-  "onCreateCommand": "pip3 install -r requirements.txt"
+  "onCreateCommand": "pip3 install -r requirements.txt",
+  "mounts": [
+      "source=/home/jdevops/.ssh,target=/home/vscode/.ssh,type=bind,consistency=cached"
+    ],
 }
