@@ -6,12 +6,11 @@
 		/status: Returns the status of the server.
 """
 
+import pytz
 from datetime import datetime
 from flask import request, jsonify
-from app.common.menu import handle_menu
 from app import app
-
-# Define the app routes here
+from app.common.menu import handle_menu
 
 
 @app.route('/bot', methods=["POST"])
@@ -35,4 +34,5 @@ def status():
             Returns:
                     status: status server
     """
-    return jsonify({'status': f'OK - {datetime.now().strftime("%a %d|%m|%Y %H:%M:%S")}'}), 200
+    colombia_tz = pytz.timezone('America/Bogota')
+    return jsonify({'status': f'OK - {datetime.now(colombia_tz).strftime("%a %d|%m|%Y %H:%M:%S")}'}), 200

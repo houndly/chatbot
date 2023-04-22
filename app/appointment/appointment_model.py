@@ -8,7 +8,7 @@ from dataclasses import dataclass
 
 
 @dataclass
-class Appointment:
+class AppointmentModel:
     """
     Appointment entity class
     """
