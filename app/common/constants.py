@@ -8,7 +8,8 @@ import os
 cwd = os.getcwd()
 
 # Construct the absolute path to the default messages file
-DEFAULT_COMMERCE_DATA = os.path.join(cwd, "app", "data", "messages.json")
+DEFAULT_COMMERCE_DATA = os.path.join(
+    cwd, "app", "data", "commerce_default.json")
 
 
 # Path to google sheets credentials using os module
