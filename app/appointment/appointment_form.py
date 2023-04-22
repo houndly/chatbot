@@ -5,8 +5,9 @@ Properties here allow to us to know which data is missing and what is necessary 
 ask user in order to create a new appointment
 """
 from dataclasses import dataclass
-from app.appointment.appointment import Appointment
+from app.appointment.appointment_model import AppointmentModel
 from app.appointment.constants import PENDING
+from app.commerce.commerce_model import CommerceModel
 
 
 @dataclass
@@ -15,13 +16,17 @@ class AppointmentForm:
     Appointment Form entity class
     """
 
+    def __init__(self, commerce: CommerceModel):
+        self.commerce = commerce
+
     asked_owner_name: bool = False
     asked_pet_name: bool = False
     asked_document_id: bool = False
     asked_date: bool = False
     asked_time: bool = False
     is_handle_new_appointment: bool = False
-    appointment: Appointment = Appointment()  # Appointment to handle data
+    appointment: AppointmentModel = AppointmentModel()  # Appointment to handle data
+    commerce: CommerceModel = CommerceModel()  # Commerce data to handle in the form
 
     def is_complete_data(self) -> bool:
         """
@@ -57,7 +62,7 @@ class AppointmentForm:
             self.appointment.date = information
         # Final information asked is time of the appointment
         self.appointment.appointment_time = information
-        # New appintments always are PENDING by default
+        # New appointments always are PENDING by default
         self.appointment.state = PENDING
 
     def get_state_message(self) -> str:
@@ -67,17 +72,17 @@ class AppointmentForm:
 
         if not self.asked_owner_name:
             self.asked_owner_name = True
-            return '¿Cuál es tu nombre?'
+            return self.commerce.messages.user_name_msg
         elif not self.asked_pet_name:
             self.asked_pet_name = True
-            return '¿Cuál es el nombre de tu mascota?'
+            return self.commerce.messages.pet_name_msg
         elif not self.asked_document_id:
             self.asked_document_id = True
-            return '¿Cuál es tu número de documento?'
+            return self.commerce.messages.document_id_msg
         elif not self.asked_date:
             self.asked_date = True
-            return '¿En qué fecha quieres la cita? \n(dd/mm/aaaa)'
+            return self.commerce.messages.appointment_date_msg
         elif not self.asked_time:
             self.asked_time = True
-            return '¿A qué hora? \n(hh:mm)'
+            return self.commerce.messages.appointment_time_msg
         return ''  # Empty means all values are completed

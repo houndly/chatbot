@@ -1,34 +1,39 @@
 {
-  "name": "Python Development",
-  "build": {
-    "dockerfile": "Dockerfile"
-  },
-  "customizations": {
-    "vscode": {
-      "extensions": [
-        "ms-python.python",
-        "magicstack.magicpython",
-        "lextudio.restructuredtext",
-        "donjayamanne.python-extension-pack",
-        "oderwat.indent-rainbow"
-      ],
-      "settings": {
-        "files.exclude": {
-          ".venv": true,
-          ".devcontainer": false,
-          "**.yaml": true,
-          "requirements.txt": true,
-          "runtime.txt": true,
-          ".github": true
-        },
-        "editor.tabSize": 4,
-        "editor.formatOnSave": true,
-        "editor.indentSize": "tabSize"
-      }
+    "name": "Houndly development",
+    "dockerComposeFile": ["../docker-compose.yml"], // Ruta al archivo docker-compose.yml.
+    "service": "python",
+    "workspaceFolder": "/usr/src/app",
+    "shutdownAction": "stopCompose",
+    "forwardPorts": [8080, 8081], // Puerto(s) que se deben reenviar desde el contenedor al host.
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "ms-python.python",
+                "oderwat.indent-rainbow",
+                "streetsidesoftware.code-spell-checker",
+                "visualstudioexptteam.intellicode-api-usage-examples",
+                "visualstudioexptteam.vscodeintellicode",
+                "streetsidesoftware.code-spell-checker-spanish",
+                "ms-ceintl.vscode-language-pack-es",
+                "shardulm94.trailing-spaces",
+                "adpyke.codesnap",
+				"donjayamanne.githistory",
+				"ms-azuretools.vscode-docker"
+            ],
+            "settings": {
+                "files.exclude": {
+                    ".venv": true,
+                    ".devcontainer": true,
+                    "**.yaml": true,
+                    "requirements.txt": true,
+                    "runtime.txt": true,
+                    ".github": true,
+                    "__pycache__": true
+                },
+                "editor.tabSize": 4,
+                "editor.formatOnSave": true,
+                "editor.indentSize": "tabSize"
+            }
+        }
     }
-  },
-  "onCreateCommand": "pip3 install -r requirements.txt",
-  "mounts": [
-      "source=/home/jdevops/.ssh,target=/home/vscode/.ssh,type=bind,consistency=cached"
-    ],
 }

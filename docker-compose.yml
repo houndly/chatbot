@@ -1,0 +1,27 @@
+version: '3'
+
+services:
+
+  python:
+    build: '.'
+    container_name: python_app
+    ports:
+      - '8080:4000'
+    volumes:
+      - .:/usr/src/app
+    networks:
+      - webnet
+
+  ngrok:
+    image: wernight/ngrok
+    container_name: ngrok_app
+    command: ngrok http python:4000
+    ports:
+      - "8081:4040"
+    depends_on:
+      - python
+    networks:
+      - webnet
+
+networks:
+  webnet:
