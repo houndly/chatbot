@@ -154,3 +154,6 @@ pyrightconfig.json
 # Credentials file
 google_sheets_credentials.json
 credentials.json
+
+# SSH public key value from dev container
+id_rsa.pub.txt
