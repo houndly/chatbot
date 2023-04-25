@@ -1,5 +1,5 @@
 runtime: python39
-entrypoint: gunicorn -b :8080 main:run
+entrypoint: gunicorn -b :8080 run.py
 instance_class: B1
 service: chatbot-deploy
 basic_scaling:
