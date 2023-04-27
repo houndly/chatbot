@@ -17,7 +17,7 @@ CREDS = ServiceAccountCredentials.from_json_keyfile_name(
 client = gspread.authorize(CREDS)
 
 
-def get_data(spreadsheet_id: str) -> list:
+def get_sheet_data(spreadsheet_id: str) -> list:
     """
     Get data from a spreadsheet
 
@@ -33,7 +33,7 @@ def get_data(spreadsheet_id: str) -> list:
     return values
 
 
-def insert_data(spreadsheet_id: str, row: list) -> bool:
+def insert_sheet_data(spreadsheet_id: str, row: list) -> bool:
     """
     Registers an appointment with the veterinarian
     """
