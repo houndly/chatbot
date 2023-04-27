@@ -60,10 +60,10 @@ class AppointmentForm:
             self.appointment.document_id = information
         elif not self.asked_time:
             self.appointment.date = information
-        # Final information asked is time of the appointment
-        self.appointment.appointment_time = information
-        # New appointments always are PENDING by default
-        self.appointment.state = PENDING
+        else:
+            self.appointment.appointment_time = information
+            # New appointments always are PENDING by default
+            self.appointment.state = PENDING
 
     def get_state_message(self) -> str:
         """
