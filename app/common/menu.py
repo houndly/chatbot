@@ -35,7 +35,7 @@ def handle_menu(incoming_msg: dict[str, str]):
     from_number: str = incoming_msg.get("WaId")
 
     # TODO: Add commerce ID from request
-    _validate_commerce_data("")
+    _validate_commerce_data("12345") # FOR TEST PURPOSE, THIS VALUE CAN'T BE NULL OR EMPTY
 
     if continue_chat:
         continue_chat = False
