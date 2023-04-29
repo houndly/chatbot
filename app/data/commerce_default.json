@@ -2,17 +2,17 @@
     "commerce_id": "12345",
     "name": "Commerce name",
     "messages": {
-        "initial_msg": "Hola, gracias por escribirnos. Empecemos eligiendo una opción del menú: \n 1. Consultar citas \n 2. Agendar cita",
-        "error_msg": "¡Ups! Algo salió mal. Intenta de nuevo más tarde.",
-        "good_bye_msg": "Gracias por preferirnos !",
-        "new_appointment_msg": "Vamos a agendar una nueva cita",
+        "initial_msg": "Hola 👋🏻, gracias por escribirnos. Empecemos eligiendo una opción del menú 🥸: \n 1. Consultar citas 👀 \n 2. Agendar cita 🦮",
+        "error_msg": "¡Ups! Algo salió mal 😣. Intenta de nuevo más tarde. ⏰",
+        "good_bye_msg": "Gracias por preferirnos ! 🫶🏻",
+        "new_appointment_msg": "Vamos a agendar una nueva cita ✍🏻",
         "current_appointments_msg": "Estas son tus citas:",
-        "appointment_added_msg": "¡Gracias! Hemos agendado tu cita.",
-        "continue_chat_msg": "Indícanos si deseas continuar chateando con nosotros (Y/n)",
-        "user_name_msg": "¿Cuál es tu nombre?",
-        "pet_name_msg": "¿Cuál es el nombre de tu mascota?",
-        "document_id_msg": "¿Cuál es tu número de documento?",
-        "appointment_date_msg": "¿En qué fecha quieres la cita? \n(dd/mm/aaaa)",
-        "appointment_time_msg": "¿A qué hora? \n(hh:mm)"
+        "appointment_added_msg": "¡Gracias! Hemos agendado tu cita. ✅",
+        "continue_chat_msg": "Indícanos si deseas continuar chateando con nosotros (Y/n) 🤔",
+        "user_name_msg": "¿Cuál es tu nombre? 💆🏻‍♂️",
+        "pet_name_msg": "¿Cuál es el nombre de tu mascota? 🐶🐱",
+        "document_id_msg": "¿Cuál es tu número de documento? 🔢",
+        "appointment_date_msg": "¿En qué fecha quieres la cita? \n(dd/mm/aaaa) 📅",
+        "appointment_time_msg": "¿A qué hora? \n(hh:mm) ⌚️"
     }
 }

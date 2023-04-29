@@ -35,22 +35,27 @@ def handle_menu(incoming_msg: dict[str, str]):
     from_number: str = incoming_msg.get("WaId")
 
     # TODO: Add commerce ID from request
-    _validate_commerce_data("12345") # FOR TEST PURPOSE, THIS VALUE CAN'T BE NULL OR EMPTY
+    # FOR TEST PURPOSE, THIS VALUE CAN'T BE NULL OR EMPTY
+    _validate_commerce_data("12345")
 
     if continue_chat:
         continue_chat = False
-        if body.lower() == 'y':
-            return str(response.message(commerce_data.messages.initial_msg))
-        elif body.lower() == 'n':
-            return str(response.message(commerce_data.messages.good_bye_msg))
+        if body == 'y':
+            response.message(commerce_data.messages.initial_msg)
+            return str(response)
+        elif body == 'n':
+            response.message(commerce_data.messages.good_bye_msg)
+            return str(response)
         else:
-            return str(response.message(commerce_data.messages.error_msg))
+            response.message(commerce_data.messages.error_msg)
+            return str(response)
 
     elif appointment_form.is_handle_new_appointment:
         return ask_for_appointment_data(response, body)
 
     elif body not in [CHECK_APPOINTMENTS, NEW_APPOINTMENT]:
-        return str(response.message(commerce_data.messages.initial_msg))
+        response.message(commerce_data.messages.initial_msg)
+        return str(response)
 
     elif body == CHECK_APPOINTMENTS:
         return _ask_for_user_id(response)
