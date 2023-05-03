@@ -110,7 +110,7 @@ def ask_for_appointment_data(message_response: MessagingResponse, body: str) -> 
     message_to_show = appointment_form.get_state_message()
 
     if (message_to_show == '' and appointment_form.is_complete_data()):
-        appointment_form.is_handle_new_appointment = False  # Appointment data handle
+        appointment_form.reset_form_state() # Reset values from form
         is_registered = register_appointment(
             appointment_form.appointment, APPOINTMENTS_SHEET_ID)
 

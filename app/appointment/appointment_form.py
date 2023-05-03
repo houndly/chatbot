@@ -86,3 +86,14 @@ class AppointmentForm:
             self.asked_time = True
             return self.commerce.messages.appointment_time_msg
         return ''  # Empty means all values are completed
+
+    def reset_form_state(self):
+        """
+        Reset form state to validate new appointments
+        """
+        self.asked_owner_name = False
+        self.asked_pet_name = False
+        self.asked_document_id = False
+        self.asked_date = False
+        self.asked_time = False
+        self.is_handle_new_appointment = False
