@@ -29,3 +29,14 @@ class AppointmentModel:
 
     def get_appointment_info(self) -> str:
         return f"Mascota: {self.pet_name} \nFecha: {self.date} \nHora: {self.appointment_time} \nEstado: {self.state}"
+    
+    def to_dict(self) -> dict:
+        return {
+            "owner_name": self.owner_name,
+            "pet_name": self.pet_name,
+            "phone": self.phone,
+            "document_id": self.document_id,
+            "date": self.date,
+            "appointment_time": self.appointment_time,
+            "state": self.state
+        }

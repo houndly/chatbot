@@ -4,6 +4,7 @@
     "messages": {
         "initial_msg": "Hola 👋🏻, gracias por escribirnos. Empecemos eligiendo una opción del menú 🥸: \n 1. Consultar citas 👀 \n 2. Agendar cita 🦮",
         "error_msg": "¡Ups! Algo salió mal 😣. Intenta de nuevo más tarde. ⏰",
+        "format_error_msg": "¡Ups! Algo salió mal 😣. Revisa el formato de tu mensaje y vuelve a intentarlo. ⏰",
         "good_bye_msg": "Gracias por preferirnos ! 🫶🏻",
         "new_appointment_msg": "Vamos a agendar una nueva cita ✍🏻",
         "current_appointments_msg": "Estas son tus citas:",

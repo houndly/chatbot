@@ -23,7 +23,6 @@ def get_commerce_data(commerce_id: str) -> CommerceModel:
     for model in commerce_data_models:
         if model.commerce_id == commerce_id:
             commerce_exists = True
-
     if commerce_exists:
         return commerce_data_models[commerce_id]
     else:

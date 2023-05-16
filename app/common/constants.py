@@ -13,7 +13,7 @@ DEFAULT_COMMERCE_DATA = os.path.join(
 
 
 # Path to google sheets credentials using os module
-GOOGLE_SHEETS = os.path.join(cwd, "app", "data", "credentials.json")
+GOOGLE_SHEETS = os.path.join(os.path.dirname(__file__), "credentials.json")
 
 # Options from menu user can select
 CHECK_APPOINTMENTS = "1"
