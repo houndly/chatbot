@@ -4,11 +4,15 @@ from app.common.sheets import get_sheet_data, insert_sheet_data
 import app.common.constants as cm
 
 
-def register_appointment(appointment: AppointmentModel, sheet_id: str) -> bool:
+def register_appointment(
+        sheet_id: str, 
+        user_session: dict
+    ) -> bool:
     """
     Registers an appointment with the veterinarian
     """
 
+    appointment = session_to_appointment(user_session)
     # Set row values to insert
     new_row = appointment.get_data_to_row()
 
@@ -16,6 +20,20 @@ def register_appointment(appointment: AppointmentModel, sheet_id: str) -> bool:
 
     return is_register  # New appointment register successfully or not
 
+
+def session_to_appointment(user_session: dict) -> AppointmentModel:
+    """
+    Transform user session to appointment
+    """
+    return AppointmentModel(
+        owner_name=user_session.get("owner_name"),
+        pet_name=user_session.get("pet_name"),
+        appointment_time=user_session.get("appointment_time"),
+        date=user_session.get("date"),
+        phone=user_session.get("phone"),
+        document_id=user_session.get("document_id"),
+        state=user_session.get("state")
+    )
 
 def get_appointments() -> list[AppointmentModel]:
     """
