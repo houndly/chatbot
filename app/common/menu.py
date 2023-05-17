@@ -63,7 +63,7 @@ def handle_menu(incoming_msg: dict[str, str]):
         return str(response)
 
     elif body == CHECK_APPOINTMENTS:
-        return _ask_for_user_id(response)
+        return _ask_for_user_id(response, user_session, from_number)
 
     elif body == NEW_APPOINTMENT:
         appointment_form.is_handle_new_appointment = True
@@ -92,7 +92,7 @@ def _validate_commerce_data(commerce_id: str):
         appointment_form = AppointmentForm(commerce=commerce_data)
 
 
-def _ask_for_user_id(message_response: MessagingResponse) -> str:
+def _ask_for_user_id(message_response: MessagingResponse, user_session: dict, from_number: str) -> str:
     """
     Ask for user ID to search information based on this data
     """
@@ -105,7 +105,7 @@ def _ask_for_user_id(message_response: MessagingResponse) -> str:
         for appointment in appointments:
             message_response.message(appointment.get_appointment_info())
 
-        _ask_for_more_process(message_response)
+        _ask_for_more_process(message_response, user_session, from_number)
 
     return str(message_response)
 

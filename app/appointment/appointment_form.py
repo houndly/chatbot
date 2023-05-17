@@ -49,30 +49,21 @@ class AppointmentForm:
         Parameters:
             information: Means information getting by user on WhatsApp
         """
-        form: dict = user_session["appointment_questions"] # only the questions dict
+        form: dict = user_session["appointment_questions"]  # only the questions dict
 
-        if not form.get("asked_owner_name"):  # self.asked_owner_name:
-            # self.appointment.phone = from_number
+        if not form.get("asked_owner_name"):
             user_session["appointment"]["phone"] = from_number
-        elif not form.get("asked_pet_name"):  # self.asked_pet_name:
-            # self.appointment.owner_name = information
+        elif not form.get("asked_pet_name"):
             user_session["appointment"]["owner_name"] = information
-        # self.asked_document_id:
         elif not form.get("asked_document_id"):
-            # self.appointment.pet_name = information
             user_session["appointment"]["pet_name"] = information
-        elif not form.get("asked_date"):  # self.asked_date:
-            # self.appointment.document_id = information
+        elif not form.get("asked_date"):
             user_session["appointment"]["document_id"] = information
-        elif not form.get("asked_time"):  # self.asked_time:
-            # self.appointment.date = information
+        elif not form.get("asked_time"):
             user_session["appointment"]["date"] = information
         else:
             user_session["appointment"]["appointment_time"] = information
-            # self.appointment.appointment_time = information
-            # New appointments always are PENDING by default
             user_session["appointment"]["state"] = PENDING
-            # self.appointment.state = PENDING
 
     def validate_input(self, input: str, user_session) -> bool:
         """
@@ -117,23 +108,6 @@ class AppointmentForm:
         """
         Get the valid message to ask user based on information missing
         """
-
-        # if not self.asked_owner_name:
-        #     self.asked_owner_name = True
-        #     return self.commerce.messages.user_name_msg
-        # elif not self.asked_pet_name:
-        #     self.asked_pet_name = True
-        #     return self.commerce.messages.pet_name_msg
-        # elif not self.asked_document_id:
-        #     self.asked_document_id = True
-        #     return self.commerce.messages.document_id_msg
-        # elif not self.asked_date:
-        #     self.asked_date = True
-        #     return self.commerce.messages.appointment_date_msg
-        # elif not self.asked_time:
-        #     self.asked_time = True
-        #     return self.commerce.messages.appointment_time_msg
-        # return ''  # Empty means all values are completed
         if not user_session.get("asked_owner_name"):
             user_session["asked_owner_name"] = True
             return self.commerce.messages.user_name_msg
@@ -155,13 +129,7 @@ class AppointmentForm:
         """
         Reset form state to validate new appointments
         """
-        # self.asked_owner_name = False
-        # self.asked_pet_name = False
-        # self.asked_document_id = False
-        # self.asked_date = False
-        # self.asked_time = False
-        # self.is_handle_new_appointment = False
-        form: dict = user_session["appointment_questions"] # only the questions dict
+        form: dict = user_session["appointment_questions"]  # only the questions dict
         form["asked_owner_name"] = False
         form["asked_pet_name"] = False
         form["asked_document_id"] = False
@@ -179,7 +147,7 @@ class AppointmentForm:
                 'asked_pet_name': self.asked_pet_name,
                 'asked_document_id': self.asked_document_id,
                 'asked_date': self.asked_date,
-                'asked_time': self.asked_time, 
+                'asked_time': self.asked_time,
             },
             'is_handle_new_appointment': self.is_handle_new_appointment,
             'appointment': self.appointment.to_dict(),
