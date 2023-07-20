@@ -5,9 +5,9 @@ import app.common.constants as cm
 
 
 def register_appointment(
-        sheet_id: str, 
-        user_session: dict
-    ) -> bool:
+    sheet_id: str,
+    user_session: dict
+) -> bool:
     """
     Registers an appointment with the veterinarian
     """
@@ -35,7 +35,8 @@ def session_to_appointment(user_session: dict) -> AppointmentModel:
         state=user_session.get("state")
     )
 
-def get_appointments() -> list[AppointmentModel]:
+
+def get_appointments(from_number: str) -> list[AppointmentModel]:
     """
     Get all appointments from the given spreadsheet.
 
@@ -45,17 +46,19 @@ def get_appointments() -> list[AppointmentModel]:
     data = get_sheet_data(APPOINTMENTS_SHEET_ID)
     data = data[3:]  # Remove the header and the first empty row
 
-    appointments = list[AppointmentModel]()
+    appointments = []
     for row in data:
-        new_appointment = AppointmentModel(
-            owner_name=row[cm.OWNER_NAME_COLUMN_ORDER],
-            pet_name=row[cm.PET_NAME_COLUMN_ORDER],
-            appointment_time=row[cm.TIME_COLUMN_ORDER],
-            date=row[cm.DATE_COLUMN_ORDER],
-            phone=row[cm.PHONE_COLUMN_ORDER],
-            document_id=row[cm.DOCUMENT_COLUMN_ORDER],
-            state=row[cm.STATE_COLUMN_ORDER]
-        )
-        appointments.append(new_appointment)
+        if from_number == row[cm.PHONE_COLUMN_ORDER]:  # Missing colon (:) here
+            print(from_number)
+            new_appointment = AppointmentModel(
+                owner_name=row[cm.OWNER_NAME_COLUMN_ORDER],
+                pet_name=row[cm.PET_NAME_COLUMN_ORDER],
+                appointment_time=row[cm.TIME_COLUMN_ORDER],
+                date=row[cm.DATE_COLUMN_ORDER],
+                phone=row[cm.PHONE_COLUMN_ORDER],
+                document_id=row[cm.DOCUMENT_COLUMN_ORDER],
+                state=row[cm.STATE_COLUMN_ORDER]
+            )
+            appointments.append(new_appointment)
 
     return appointments

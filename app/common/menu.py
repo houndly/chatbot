@@ -96,12 +96,11 @@ def _ask_for_user_id(message_response: MessagingResponse, user_session: dict, fr
     """
     Ask for user ID to search information based on this data
     """
-
-    appointments = get_appointments()
+    appointments = get_appointments(from_number)
     if appointments:
         message_response.message(
             commerce_data.messages.current_appointments_msg)
-
+        
         for appointment in appointments:
             message_response.message(appointment.get_appointment_info())
 
@@ -161,6 +160,6 @@ def _ask_for_more_process(message_response: MessagingResponse, user_session: dic
     """
 
     user_session["continue_chat"] = True
-    session[from_number] = user_session
+    session[from_number] = user_session 
     message_response.message(commerce_data.messages.continue_chat_msg)
     return str(message_response)
