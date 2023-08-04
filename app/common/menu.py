@@ -35,7 +35,7 @@ def handle_menu(incoming_msg: dict[str, str]):
     # Get session object
 
     user_session = session.get(from_number, {})
-    user_session["delete_appointment"] = False
+    
     if not user_session:
         user_session["continue_chat"] = False
     # TODO: Add commerce ID from request
@@ -68,6 +68,8 @@ def handle_menu(incoming_msg: dict[str, str]):
         else:
             response.message(commerce_data.messages.appointment_delete_err_msg)
 
+        _ask_for_more_process(response, user_session, from_number)
+
         return str(response)
     
     elif body not in [CHECK_APPOINTMENTS, NEW_APPOINTMENT, DELETE_APPOINTMENT]:
@@ -90,8 +92,6 @@ def handle_menu(incoming_msg: dict[str, str]):
         return ask_for_appointment_data(response, body, from_number)
 
     elif body == DELETE_APPOINTMENT:
-        user_session["delete_appointment"] = True
-        session[from_number] = user_session
         return _ask_delete_appointment(response, user_session, from_number)
 
     return str(commerce_data.messages.error_msg)
@@ -135,12 +135,13 @@ def _ask_delete_appointment(message_response: MessagingResponse, user_session: d
 
     appointments = get_appointments(from_number)
     if appointments:
-        message_response.message(
-            commerce_data.messages.current_appointments_msg)
-
+        message_response.message(commerce_data.messages.current_appointments_msg)
+        
         for appointment in appointments:
             message_response.message(appointment.get_appointment_info())
         message_response.message(commerce_data.messages.appointment_delete_msg)
+        user_session["delete_appointment"] = True
+        session[from_number] = user_session
     else:
         message_response.message(
             commerce_data.messages.appointment_pending_msg)
