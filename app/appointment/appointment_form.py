@@ -52,7 +52,13 @@ class AppointmentForm:
             information: Means information getting by user on WhatsApp
         """
         form: dict = user_session["appointment_questions"]  # only the questions dict
-
+        type_mapping = {
+                "1": "Baño y Aseo",
+                "2": "Consulta Médica",
+                "3": "Vacunación",
+                "4": "Otros"
+            }
+        
         if not form.get("asked_owner_name"):
             user_session["appointment"]["phone"] = from_number
             user_session["appointment"]["id"] = random.randint(1, 99999)
@@ -67,7 +73,7 @@ class AppointmentForm:
         elif not form.get("asked_type"):
             user_session["appointment"]["appointment_time"] = information
         else:
-            user_session["appointment"]["type"] = information
+            user_session["appointment"]["type"] = type_mapping[information]
             user_session["appointment"]["state"] = PENDING
 
     def validate_input(self, input: str, user_session) -> bool:
@@ -93,14 +99,23 @@ class AppointmentForm:
 
     def _validate_date(self, date: str) -> bool:
         """
-        Validate if date is valid
+        Validate if date is valid and not earlier than the current date.
         """
         try:
-            datetime.datetime.strptime(date, '%d/%m/%Y')
-            return True
+            # Parse the input date
+            input_date = datetime.datetime.strptime(date, '%d/%m/%Y')
+
+            # Get the current date
+            current_date = datetime.datetime.now()
+
+            # Compare the input date with the current date
+            if input_date >= current_date:
+                return True
+            else:
+                return False
         except ValueError:
             return False
-
+        
     def _validate_time(self, time: str) -> bool:
         """
         Validate if time is valid

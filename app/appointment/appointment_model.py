@@ -27,7 +27,7 @@ class AppointmentModel:
         Get data to be insert inside the sheet row
         """
 
-        return [self.id ,self.owner_name, self.pet_name, self.phone, self.document_id, self.date, self.appointment_time, self.state, self.type]
+        return [self.id, self.owner_name, self.pet_name, self.phone, self.document_id, self.date, self.appointment_time, self.state, self.type]
 
     def get_appointment_info(self) -> str:
         state_emoji = ""
@@ -38,8 +38,7 @@ class AppointmentModel:
         elif self.state == "Cancelada":
             state_emoji = "❌"  # Emoji para estado eliminado
 
-        return f"💳 ID: {self.id} \n🐶🐱 Nombre: {self.pet_name} \n🗓️ Fecha: {self.date} \n🕕 Hora: {self.appointment_time} \n👀 Tipo: {self.type} \n{state_emoji} Estado: {self.state} "   
-    
+        return f"💳 ID: {self.id} \n🐶🐱 Nombre: {self.pet_name} \n🗓️ Fecha: {self.date} \n🕕 Hora: {self.appointment_time} \n👀 Tipo: {self.type} \n{state_emoji} Estado: {self.state} "
 
     def to_dict(self) -> dict:
         return {

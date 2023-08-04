@@ -35,7 +35,7 @@ def handle_menu(incoming_msg: dict[str, str]):
     # Get session object
 
     user_session = session.get(from_number, {})
-    
+
     if not user_session:
         user_session["continue_chat"] = False
     # TODO: Add commerce ID from request
@@ -46,10 +46,10 @@ def handle_menu(incoming_msg: dict[str, str]):
     if user_session["continue_chat"]:
         user_session["continue_chat"] = False
         session[from_number] = user_session
-        if body == 'y':
+        if body.lower == 'y':
             response.message(commerce_data.messages.initial_msg)
             return str(response)
-        elif body == 'n':
+        elif body.lower == 'n':
             response.message(commerce_data.messages.good_bye_msg)
             user_session.clear()
             session[from_number] = user_session
@@ -60,18 +60,19 @@ def handle_menu(incoming_msg: dict[str, str]):
 
     elif user_session.get("appointment_form") and user_session.get("appointment_form").get("is_handle_new_appointment"):
         return ask_for_appointment_data(response, body, from_number)
-    
+
     elif user_session.get("delete_appointment"):
         user_session["delete_appointment"] = False
         if delete_appointment_by_id(body):
-          response.message(commerce_data.messages.appointment_delete_success_msg)
+            response.message(
+                commerce_data.messages.appointment_delete_success_msg)
         else:
             response.message(commerce_data.messages.appointment_delete_err_msg)
 
         _ask_for_more_process(response, user_session, from_number)
 
         return str(response)
-    
+
     elif body not in [CHECK_APPOINTMENTS, NEW_APPOINTMENT, DELETE_APPOINTMENT]:
         response.message(commerce_data.messages.initial_msg)
         user_session.clear()
@@ -135,8 +136,9 @@ def _ask_delete_appointment(message_response: MessagingResponse, user_session: d
 
     appointments = get_appointments(from_number)
     if appointments:
-        message_response.message(commerce_data.messages.current_appointments_msg)
-        
+        message_response.message(
+            commerce_data.messages.current_appointments_msg)
+
         for appointment in appointments:
             message_response.message(appointment.get_appointment_info())
         message_response.message(commerce_data.messages.appointment_delete_msg)
