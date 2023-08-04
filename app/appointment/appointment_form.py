@@ -9,6 +9,7 @@ from app.appointment.appointment_model import AppointmentModel
 from app.appointment.constants import PENDING
 from app.commerce.commerce_model import CommerceModel
 import datetime
+import random
 
 
 @dataclass
@@ -25,6 +26,7 @@ class AppointmentForm:
     asked_document_id: bool = False
     asked_date: bool = False
     asked_time: bool = False
+    asked_type: bool = False
     is_handle_new_appointment: bool = False
     appointment: AppointmentModel = AppointmentModel()  # Appointment to handle data
     commerce: CommerceModel = CommerceModel()  # Commerce data to handle in the form
@@ -53,6 +55,7 @@ class AppointmentForm:
 
         if not form.get("asked_owner_name"):
             user_session["appointment"]["phone"] = from_number
+            user_session["appointment"]["id"] = random.randint(1, 99999)
         elif not form.get("asked_pet_name"):
             user_session["appointment"]["owner_name"] = information
         elif not form.get("asked_document_id"):
@@ -61,8 +64,10 @@ class AppointmentForm:
             user_session["appointment"]["document_id"] = information
         elif not form.get("asked_time"):
             user_session["appointment"]["date"] = information
-        else:
+        elif not form.get("asked_type"):
             user_session["appointment"]["appointment_time"] = information
+        else:
+            user_session["appointment"]["type"] = information
             user_session["appointment"]["state"] = PENDING
 
     def validate_input(self, input: str, user_session) -> bool:
@@ -79,6 +84,8 @@ class AppointmentForm:
             return input.isnumeric()
         elif not user_session["asked_time"]:
             return self._validate_date(input)
+        elif not user_session["asked_type"]:
+            return True
         else:
             if user_session["asked_time"]:
                 return self._validate_time(input)
@@ -123,6 +130,9 @@ class AppointmentForm:
         elif not user_session.get("asked_time"):
             user_session["asked_time"] = True
             return self.commerce.messages.appointment_time_msg
+        elif not user_session.get("asked_type"):
+            user_session["asked_type"] = True
+            return self.commerce.messages.appointment_type_msg
         return ''  # Empty means all values are completed
 
     def reset_form_state(self, user_session: dict):
@@ -135,6 +145,7 @@ class AppointmentForm:
         form["asked_document_id"] = False
         form["asked_date"] = False
         form["asked_time"] = False
+        form["asked_type"] = False
         user_session["is_handle_new_appointment"] = False
 
     def to_dict(self) -> dict:
@@ -147,6 +158,7 @@ class AppointmentForm:
                 'asked_pet_name': self.asked_pet_name,
                 'asked_document_id': self.asked_document_id,
                 'asked_date': self.asked_date,
+                'asked_type': self.asked_type,
                 'asked_time': self.asked_time,
             },
             'is_handle_new_appointment': self.is_handle_new_appointment,

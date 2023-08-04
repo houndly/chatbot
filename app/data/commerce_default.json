@@ -2,7 +2,7 @@
     "commerce_id": "12345",
     "name": "Commerce name",
     "messages": {
-        "initial_msg": "Hola 👋🏻, gracias por escribirnos. Empecemos eligiendo una opción del menú 🥸: \n 1. Consultar citas 👀 \n 2. Agendar cita 🦮",
+        "initial_msg": "Hola 👋🏻, gracias por escribirnos. Empecemos eligiendo una opción del menú 🥸: \n  📝 1. Consultar citas  \n  🗓️ 2. Agendar cita  \n  🗑️ 3. Eliminar Cita",
         "error_msg": "¡Ups! Algo salió mal 😣. Intenta de nuevo más tarde. ⏰",
         "format_error_msg": "¡Ups! Algo salió mal 😣. Revisa el formato de tu mensaje y vuelve a intentarlo. ⏰",
         "good_bye_msg": "Gracias por preferirnos ! 🫶🏻",
@@ -14,6 +14,11 @@
         "pet_name_msg": "¿Cuál es el nombre de tu mascota? 🐶🐱",
         "document_id_msg": "¿Cuál es tu número de documento? 🔢",
         "appointment_date_msg": "¿En qué fecha quieres la cita? \n(dd/mm/aaaa) 📅",
-        "appointment_time_msg": "¿A qué hora? \n(hh:mm) ⌚️"
+        "appointment_time_msg": "¿A qué hora? \n(hh:mm) ⌚️",
+        "appointment_pending_msg":"No tienes citas pendientes 😊",
+        "appointment_type_msg":"¿Cuál es el tipo de cita que deseas agendar? 📝",
+        "appointment_delete_msg":"Indica el ID de la cita que deseas cancelar.",
+        "appointment_delete_success_msg":"La cita ha sido eliminada con éxito.",
+        "appointment_delete_err_msg":"El ID ingresado no es correcto"
     }
 }

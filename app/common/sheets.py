@@ -29,7 +29,7 @@ def get_sheet_data(spreadsheet_id: str) -> list:
     """
     sheet = client.open_by_key(spreadsheet_id).sheet1
     values = sheet.get_all_values()
-    app.logger.info(values)
+    # app.logger.info(values)
     return values
 
 
@@ -42,8 +42,27 @@ def insert_sheet_data(spreadsheet_id: str, row: list) -> bool:
         sheet = client.open_by_key(spreadsheet_id).sheet1
         # Set row values to insert
         sheet.append_row(row)
-        app.logger.info(f'Data saved: {row}')
+        # app.logger.info(f'Data saved: {row}')
         return True  # Register successfully
     except:
-        app.logger.error(f'Error saving data: {row}')
+        #app.logger.error(f'Error saving data: {row}')
         return False  # Error register
+
+def delete_sheet_data(spreadsheet_id: str, row_index: int) -> bool:
+    """
+    Delete a row from the spreadsheet.
+
+    Args:
+        spreadsheet_id: The ID of the spreadsheet.
+        row_index: The index of the row to be deleted (0-based).
+
+    Returns:
+        True if the row was deleted successfully, False otherwise.
+    """
+    try:
+        sheet = client.open_by_key(spreadsheet_id).sheet1
+        sheet.delete_row(row_index + 1)  # Adjust row index (1-based in Google Sheets)
+        return True
+    except Exception as e:
+        # Handle exceptions appropriately (e.g., logging, error handling)
+        return False

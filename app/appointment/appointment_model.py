@@ -12,6 +12,7 @@ class AppointmentModel:
     """
     Appointment entity class
     """
+    id: str = None
     owner_name: str = None
     pet_name: str = None
     phone: int = None
@@ -19,17 +20,27 @@ class AppointmentModel:
     date: datetime = None
     appointment_time: str = None
     state: str = None
+    type: str = None
 
     def get_data_to_row(self) -> list:
         """
         Get data to be insert inside the sheet row
         """
 
-        return [self.owner_name, self.pet_name, self.phone, self.document_id, self.date, self.appointment_time, self.state]
+        return [self.id ,self.owner_name, self.pet_name, self.phone, self.document_id, self.date, self.appointment_time, self.state, self.type]
 
     def get_appointment_info(self) -> str:
-        return f"Nombre 🐶🐱: {self.pet_name} \nFecha 🗓️: {self.date} \nHora 🕕: {self.appointment_time} \nEstado ☑️: {self.state}"
+        state_emoji = ""
+        if self.state == "Confirmada":
+            state_emoji = "✅"  # Emoji para estado confirmado
+        elif self.state == "Pendiente":
+            state_emoji = "⏳"  # Emoji para estado pendiente
+        elif self.state == "Cancelada":
+            state_emoji = "❌"  # Emoji para estado eliminado
+
+        return f"💳 ID: {self.id} \n🐶🐱 Nombre: {self.pet_name} \n🗓️ Fecha: {self.date} \n🕕 Hora: {self.appointment_time} \n👀 Tipo: {self.type} \n{state_emoji} Estado: {self.state} "   
     
+
     def to_dict(self) -> dict:
         return {
             "owner_name": self.owner_name,
@@ -38,5 +49,6 @@ class AppointmentModel:
             "document_id": self.document_id,
             "date": self.date,
             "appointment_time": self.appointment_time,
-            "state": self.state
+            "state": self.state,
+            "type": self.type
         }
