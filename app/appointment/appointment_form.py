@@ -4,16 +4,17 @@ Entity to handle appointment state when user want to create a new one
 Properties here allow to us to know which data is missing and what is necessary to
 ask user in order to create a new appointment
 """
-from dataclasses import dataclass
-from app.appointment.appointment_model import AppointmentModel
-from app.appointment.constants import PENDING
-from app.commerce.commerce_model import CommerceModel
+from app import app
 import datetime
 import random
+from dataclasses import dataclass
+from app.appointment.appointment_model import AppointmentModel
+from app.appointment.constants import PENDING,TYPE_MAPPING,TIME_MAPPING
+from app.commerce.commerce_model import CommerceModel
 
 
 @dataclass
-class AppointmentForm:
+class   AppointmentForm:
     """
     Appointment Form entity class
     """
@@ -52,13 +53,7 @@ class AppointmentForm:
             information: Means information getting by user on WhatsApp
         """
         form: dict = user_session["appointment_questions"]  # only the questions dict
-        type_mapping = {
-                "1": "Baño y Aseo",
-                "2": "Consulta Médica",
-                "3": "Vacunación",
-                "4": "Otros"
-            }
-        
+
         if not form.get("asked_owner_name"):
             user_session["appointment"]["phone"] = from_number
             user_session["appointment"]["id"] = random.randint(1, 99999)
@@ -71,9 +66,9 @@ class AppointmentForm:
         elif not form.get("asked_time"):
             user_session["appointment"]["date"] = information
         elif not form.get("asked_type"):
-            user_session["appointment"]["appointment_time"] = information
+            user_session["appointment"]["appointment_time"] = TIME_MAPPING[information]
         else:
-            user_session["appointment"]["type"] = type_mapping[information]
+            user_session["appointment"]["type"] = TYPE_MAPPING[information]
             user_session["appointment"]["state"] = PENDING
 
     def validate_input(self, input: str, user_session) -> bool:
@@ -91,9 +86,10 @@ class AppointmentForm:
         elif not user_session["asked_time"]:
             return self._validate_date(input)
         elif not user_session["asked_type"]:
-            return True
+            return self._validate_time(input)
         else:
             if user_session["asked_time"]:
+                app.logger.info(input)
                 return self._validate_time(input)
             return True
 
@@ -103,14 +99,13 @@ class AppointmentForm:
         """
         try:
             # Parse the input date
-            input_date = datetime.datetime.strptime(date, '%d/%m/%Y')
-
+            input_date = datetime.datetime.strptime(date, '%d/%m/%Y').date()
             # Get the current date
-            current_date = datetime.datetime.now()
+            current_date = datetime.datetime.now().date()
 
             # Compare the input date with the current date
             if input_date >= current_date:
-                return True
+                return (True)
             else:
                 return False
         except ValueError:
@@ -118,12 +113,24 @@ class AppointmentForm:
         
     def _validate_time(self, time: str) -> bool:
         """
-        Validate if time is valid
+        Validate if time is valid (between 1 and 11) and not a letter
         """
         try:
-            datetime.datetime.strptime(time, '%H:%M')
-            return True
+            # Check if the input contains only digits
+            if not time.isdigit():
+                return False
+            
+            # Try to convert the input to an integer
+            time_int = int(time)
+
+            # Check if the integer is between 1 and 11
+            if 1 <= time_int <= 11:
+                return True
+            else:
+                return False
+
         except ValueError:
+            # If the conversion to integer fails, it means the input is not a valid number
             return False
 
     def get_state_message(self, user_session: dict) -> str:
@@ -144,7 +151,7 @@ class AppointmentForm:
             return self.commerce.messages.appointment_date_msg
         elif not user_session.get("asked_time"):
             user_session["asked_time"] = True
-            return self.commerce.messages.appointment_time_msg
+            return self.commerce.messages.appointment_time_msg 
         elif not user_session.get("asked_type"):
             user_session["asked_type"] = True
             return self.commerce.messages.appointment_type_msg
@@ -180,3 +187,4 @@ class AppointmentForm:
             'appointment': self.appointment.to_dict(),
             'commerce': self.commerce.to_dict()
         }
+    

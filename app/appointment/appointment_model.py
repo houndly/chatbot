@@ -27,7 +27,7 @@ class AppointmentModel:
         Get data to be insert inside the sheet row
         """
 
-        return [self.id, self.owner_name, self.pet_name, self.phone, self.document_id, self.date, self.appointment_time, self.state, self.type]
+        return [self.id, self.owner_name, self.pet_name, self.phone, self.document_id, self.date, self.appointment_time, self.type, self.state ]
 
     def get_appointment_info(self) -> str:
         state_emoji = ""

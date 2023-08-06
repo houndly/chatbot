@@ -38,9 +38,13 @@ class CommerceMessagesModel:
     appointment_pending_msg: str = None
 
     appointment_type_msg: str = None
+
     appointment_delete_msg: str = None
+
     appointment_delete_success_msg: str = None
+    
     appointment_delete_err_msg: str = None
+    appointment_shedule_err_msg: str = None
 
     def to_dict(self):
         """
@@ -63,5 +67,6 @@ class CommerceMessagesModel:
             "appointment_type_msg": self.appointment_type_msg,
             "appointment_delete_msg": self.appointment_delete_msg,
             "appointment_delete_success_msg": self.appointment_delete_success_msg,
-            "appointment_delete_err_msg": self.appointment_delete_err_msg
+            "appointment_delete_err_msg": self.appointment_delete_err_msg,
+            "appointment_shedule_err_msg": self.appointment_shedule_err_msg
         }
