@@ -173,8 +173,7 @@ def _ask_delete_appointment(message_response: MessagingResponse, user_session: d
     else:
         message_response.message(
             commerce_data.messages.appointment_pending_msg)
-
-    _ask_for_more_process(message_response, user_session, from_number)
+        _ask_for_more_process(message_response, user_session, from_number)
 
     return str(message_response)
 
