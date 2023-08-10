@@ -20,7 +20,6 @@ def session_to_appointment(user_session: dict) -> AppointmentModel:
         appointment_time=user_session.get("appointment_time"),
         date=user_session.get("date"),
         phone=user_session.get("phone"),
-        document_id=user_session.get("document_id"),
         state=user_session.get("state"),
         type=user_session.get("type")
     )
@@ -32,7 +31,6 @@ def session_to_schedule(user_session: dict) -> ScheduleModel:
     """
     Transform user session to schedule
     """
-    app.logger.info(user_session)
     appointment_time = user_session.get("appointment_time")
 
     # Split the appointment_time into time_init and time_end

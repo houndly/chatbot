@@ -65,7 +65,6 @@ def handle_menu(incoming_msg: dict[str, str]):
 
                 # return str(response)
  
-        
     if user_session["continue_chat"]:
         user_session["continue_chat"] = False
         session[from_number] = user_session
@@ -83,6 +82,7 @@ def handle_menu(incoming_msg: dict[str, str]):
 
   
     elif user_session.get("appointment_form") and user_session.get("appointment_form").get("is_handle_new_appointment"):
+        # app.logger.info(user_session)
         if user_session.get("is_date_unavailable"):
             response.message(commerce_data.messages.appointment_shedule_err_msg)
         return ask_for_appointment_data(response, body, from_number)

@@ -28,8 +28,6 @@ class CommerceMessagesModel:
     user_name_msg: str = None
     # Adding appointment - User pet's name
     pet_name_msg: str = None
-    # Adding appointment - Document id number
-    document_id_msg: str = None
     # Adding appointment - Appointment date
     appointment_date_msg: str = None
     # Adding appointment - Appointment time
@@ -60,7 +58,6 @@ class CommerceMessagesModel:
             "continue_chat_msg": self.continue_chat_msg,
             "user_name_msg": self.user_name_msg,
             "pet_name_msg": self.pet_name_msg,
-            "document_id_msg": self.document_id_msg,
             "appointment_date_msg": self.appointment_date_msg,
             "appointment_time_msg": self.appointment_time_msg,
             "appointment_pending_msg": self.appointment_pending_msg,

@@ -53,7 +53,6 @@ def get_appointments(from_number: str) -> list[AppointmentModel]:
                 appointment_time=row[cm.TIME_COLUMN_ORDER],
                 date=row[cm.DATE_COLUMN_ORDER],
                 phone=row[cm.PHONE_COLUMN_ORDER],
-                document_id=row[cm.DOCUMENT_COLUMN_ORDER],
                 type=row[cm.TYPE_COLUMN_ORDER],
                 state=row[cm.STATE_COLUMN_ORDER]
             )
