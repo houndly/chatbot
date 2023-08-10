@@ -124,7 +124,7 @@ class   AppointmentForm:
             time_int = int(time)
 
             # Check if the integer is between 1 and 11
-            if 1 <= time_int <= 11:
+            if 1 <= time_int <= 8:
                 return True
             else:
                 return False
