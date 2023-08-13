@@ -14,7 +14,7 @@
         "pet_name_msg": "¿Cuál es el nombre de tu mascota? 🐶🐱",
         "document_id_msg": "¿Cuál es tu número de documento? 🔢",
         "appointment_date_msg": "¿En qué fecha quieres la cita? \n(dd/mm/aaaa) 📅",
-        "appointment_time_msg": "¿En qué horario prefieres? ⌚️ \n 🕐 1)  8:00 AM -> 8:30 AM \n 🕑 2)  9:00 AM -> 9:30 AM \n 🕒 3)  10:00 AM -> 10:30 AM \n 🕔 4)  11:00 AM -> 11:30 AM \n 🕕 5)  12:00 PM -> 12:30 PM \n 🕞 6)  1:00 PM -> 1:30 PM \n 🕜 7)  2:00 PM -> 2:30 PM \n 🕘 8)  3:00 PM -> 3:30 PM \n 🕣 9)  4:00 PM -> 4:30 PM \n 🕤 10) 5:00 PM -> 5:30 PM \n 🕦 11) 6:00 PM -> 6:30 PM",
+        "appointment_time_msg": "¿En qué horario prefieres? ⌚️ \n  🕐 1) 10:00 AM -> 10:30 AM  \n  🕑 2) 11:00 AM -> 11:30 AM  \n  🕒 3) 12:00 PM -> 12:30 PM  \n  🕔 4) 2:00 PM -> 2:30 PM  \n  🕕 5) 3:00 PM -> 3:30 PM  \n  🕞 6) 4:00 PM -> 4:30 PM  \n  🕜 7) 5:00 PM -> 5:30 PM  \n  🕘 8) 6:00 PM -> 6:30 PM ",
         "appointment_pending_msg":"No tienes citas pendientes 😊",
         "appointment_type_msg":"🗓️ ¿Qué tipo de cita deseas agendar? 🐾  \n  🩺 1. Consulta Médica \n  💉 2. Vacunación \n  👨‍⚕️ 3. Otros" ,
         "appointment_delete_msg":"Indica el ID de la cita que deseas cancelar. ",
