@@ -11,10 +11,9 @@ ID_SCHEDULES_SHEET="Horarios"
 ID_APPOINTMENTS_SHEET="Citas_agendadas"
 
 TYPE_MAPPING = {
-        "1": "Baño y Aseo",
-        "2": "Consulta Médica",
-        "3": "Vacunación",
-        "4": "Otros"
+        "1": "Consulta Médica",
+        "2": "Vacunación",
+        "3": "Otros"
     }
 
 TIME_MAPPING = {
