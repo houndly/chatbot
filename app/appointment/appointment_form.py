@@ -9,7 +9,7 @@ import datetime
 import random
 from dataclasses import dataclass
 from app.appointment.appointment_model import AppointmentModel
-from app.appointment.constants import PENDING,TYPE_MAPPING,TIME_MAPPING
+from app.appointment.constants import PENDING,TYPE_MAPPING,TIME_MAPPING_WEEKLY,TIME_MAPPING_WEEKEND
 from app.commerce.commerce_model import CommerceModel
 
 
@@ -66,7 +66,7 @@ class   AppointmentForm:
         elif not form.get("asked_time"):
             user_session["appointment"]["date"] = information
         elif not form.get("asked_type"):
-            user_session["appointment"]["appointment_time"] = TIME_MAPPING[information]
+            user_session["appointment"]["appointment_time"] = TIME_MAPPING_WEEKEND[information] if datetime.datetime.now().weekday() == 6 else TIME_MAPPING_WEEKLY[information]
         else:
             user_session["appointment"]["type"] = TYPE_MAPPING[information]
             user_session["appointment"]["state"] = PENDING
