@@ -17,7 +17,7 @@
         "appointment_time_weekend_msg": "¿En qué horario prefieres? ⌚️ \n 🕐 1) 9:00 AM -> 10:00 AM  \n 🕐 2) 10:00 AM -> 11:00 AM  \n 🕐 3) 11:00 AM -> 12:00 AM  \n 🕐 4) 12:00 PM -> 1:00 PM  \n 🕐 5) 1:00 PM -> 2:00 PM  \n 🕐 6) 2:00 PM -> 3:00 PM",
         "appointment_time_weekly_msg": "¿En qué horario prefieres? ⌚️  \n 🕐 1) 9:00 AM -> 10:00 AM \n 🕐 2) 10:00 AM -> 11:00 AM \n 🕐 3) 11:00 AM -> 12:00 AM \n 🕐 4) 12:00 PM -> 1:00 PM \n 🕐 5) 1:00 PM -> 2:00 PM \n 🕐 6) 2:00 PM -> 3:00 PM \n 🕐 7) 3:00 PM -> 4:00 PM \n 🕐 8) 4:00 PM -> 5:00 PM \n 🕐 9) 5:00 PM -> 6:00 PM",
         "appointment_pending_msg":"No tienes citas pendientes 😊",
-        "appointment_type_msg":"🗓️ ¿Qué tipo de cita deseas agendar? 🐾  \n 💉 1. Vacunación. \n 🦠 2. Desparasitación. \n 🩺 3. Consulta médica. \n 📡 4. Ecografía. \n 📷 5. Radiografía. \n ✂️ 6. Baño y peluquería. \n 🧪 7. Exámenes de laboratorio. \n 🦷 8.Profilaxis. \n 👨‍⚕️  9. Otros." ,
+        "appointment_type_msg":"🗓️ ¿Qué tipo de cita deseas agendar? 🐾  \n 💉 1. Vacunación. \n 🦠 2. Desparasitación. \n 🩺 3. Consulta médica. \n 📡 4. Ecografía. \n 📷 5. Radiografía. \n ✂️ 6. Baño y peluquería. \n 🧪 7. Exámenes de laboratorio. \n 🦷 8. Profilaxis. \n 👨‍⚕️  9. Otros." ,
         "appointment_delete_msg":"Indica el ID de la cita que deseas cancelar. ",
         "appointment_delete_success_msg":"La cita ha sido eliminada con éxito. ✅ ",
         "appointment_delete_err_msg":"El ID ingresado no es correcto ❌",
