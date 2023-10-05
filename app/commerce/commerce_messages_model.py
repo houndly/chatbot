@@ -33,7 +33,9 @@ class CommerceMessagesModel:
     # Adding appointment - Appointment date
     appointment_date_msg: str = None
     # Adding appointment - Appointment time
-    appointment_time_msg: str = None
+    appointment_time_weekend_msg: str = None
+
+    appointment_time_weekly_msg: str = None
     
     appointment_pending_msg: str = None
 
@@ -62,7 +64,8 @@ class CommerceMessagesModel:
             "pet_name_msg": self.pet_name_msg,
             "document_id_msg": self.document_id_msg,
             "appointment_date_msg": self.appointment_date_msg,
-            "appointment_time_msg": self.appointment_time_msg,
+            "appointment_time_weekend_msg": self.appointment_time_weekend_msg,
+            "appointment_time_weekly_msg": self.appointment_time_weekly_msg,
             "appointment_pending_msg": self.appointment_pending_msg,
             "appointment_type_msg": self.appointment_type_msg,
             "appointment_delete_msg": self.appointment_delete_msg,

@@ -9,12 +9,12 @@ import datetime
 import random
 from dataclasses import dataclass
 from app.appointment.appointment_model import AppointmentModel
-from app.appointment.constants import PENDING,TYPE_MAPPING,TIME_MAPPING
+from app.appointment.constants import PENDING, TYPE_MAPPING, TIME_MAPPING_WEEKLY, TIME_MAPPING_WEEKEND
 from app.commerce.commerce_model import CommerceModel
 
 
 @dataclass
-class   AppointmentForm:
+class AppointmentForm:
     """
     Appointment Form entity class
     """
@@ -28,6 +28,7 @@ class   AppointmentForm:
     asked_date: bool = False
     asked_time: bool = False
     asked_type: bool = False
+    input_date = datetime.datetime.now().date()
     is_handle_new_appointment: bool = False
     appointment: AppointmentModel = AppointmentModel()  # Appointment to handle data
     commerce: CommerceModel = CommerceModel()  # Commerce data to handle in the form
@@ -66,7 +67,11 @@ class   AppointmentForm:
         elif not form.get("asked_time"):
             user_session["appointment"]["date"] = information
         elif not form.get("asked_type"):
-            user_session["appointment"]["appointment_time"] = TIME_MAPPING[information]
+             app.logger.info(user_session)
+             if datetime.datetime.strptime(user_session.get("appointment").get("date"), '%d/%m/%Y').date().weekday() != 6:
+                user_session["appointment"]["appointment_time"] = TIME_MAPPING_WEEKLY[information]
+             else:
+                 user_session["appointment"]["appointment_time"] = TIME_MAPPING_WEEKEND[information]
         else:
             user_session["appointment"]["type"] = TYPE_MAPPING[information]
             user_session["appointment"]["state"] = PENDING
@@ -84,12 +89,12 @@ class   AppointmentForm:
         elif not user_session["asked_date"]:
             return input.isnumeric()
         elif not user_session["asked_time"]:
+            user_session["input_date"] = input
             return self._validate_date(input)
         elif not user_session["asked_type"]:
             return self._validate_time(input)
         else:
             if user_session["asked_time"]:
-                app.logger.info(input)
                 return self._validate_time(input)
             return True
 
@@ -110,7 +115,7 @@ class   AppointmentForm:
                 return False
         except ValueError:
             return False
-        
+
     def _validate_time(self, time: str) -> bool:
         """
         Validate if time is valid (between 1 and 11) and not a letter
@@ -119,7 +124,7 @@ class   AppointmentForm:
             # Check if the input contains only digits
             if not time.isdigit():
                 return False
-            
+
             # Try to convert the input to an integer
             time_int = int(time)
 
@@ -151,7 +156,12 @@ class   AppointmentForm:
             return self.commerce.messages.appointment_date_msg
         elif not user_session.get("asked_time"):
             user_session["asked_time"] = True
-            return self.commerce.messages.appointment_time_msg 
+            if datetime.datetime.strptime(user_session.get("input_date"), '%d/%m/%Y').date().weekday() != 6:
+                return self.commerce.messages.appointment_time_weekly_msg
+            else:
+                return self.commerce.messages.appointment_time_weekend_msg
+
+
         elif not user_session.get("asked_type"):
             user_session["asked_type"] = True
             return self.commerce.messages.appointment_type_msg
@@ -182,9 +192,9 @@ class   AppointmentForm:
                 'asked_date': self.asked_date,
                 'asked_type': self.asked_type,
                 'asked_time': self.asked_time,
+                'input_date': self.input_date
             },
             'is_handle_new_appointment': self.is_handle_new_appointment,
             'appointment': self.appointment.to_dict(),
             'commerce': self.commerce.to_dict()
         }
-    

@@ -36,14 +36,15 @@ def handle_menu(incoming_msg: dict[str, str]):
     # Get session object
     user_session = session.get(from_number, {})
 
-    # user_session.clear()
+    #user_session.clear()
 
     if not user_session:
         user_session["continue_chat"] = False
     # TODO: Add commerce ID from request
     # FOR TEST PURPOSE, THIS VALUE CAN'T BE NULL OR EMPTY
     _validate_commerce_data("12345")
-    
+    # app.logger.info(user_session)
+
     if user_session.get("appointment_form") and user_session.get("appointment_form").get("is_handle_new_appointment"):
         if user_session.get("appointment_form").get("appointment") and user_session.get("appointment_form").get("appointment").get("date") != None and user_session.get("appointment_form").get("appointment").get("appointment_time") != None:
             if not is_datetime_available(session_to_schedule(user_session.get("appointment_form").get("appointment"))):
