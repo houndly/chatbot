@@ -68,6 +68,7 @@ class AppointmentForm:
             user_session["appointment"]["date"] = information
         elif not form.get("asked_type"):
              app.logger.info(user_session)
+             app.logger((user_session.get("appointment").get("date"), '%d/%m/%Y').date().weekday())
              if datetime.datetime.strptime(user_session.get("appointment").get("date"), '%d/%m/%Y').date().weekday() != 6:
                 user_session["appointment"]["appointment_time"] = TIME_MAPPING_WEEKLY[information]
              else:
@@ -129,7 +130,7 @@ class AppointmentForm:
             time_int = int(time)
 
             # Check if the integer is between 1 and 11
-            if 1 <= time_int <= 8:
+            if 1 <= time_int <= 9:
                 return True
             else:
                 return False
