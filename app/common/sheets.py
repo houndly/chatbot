@@ -42,10 +42,10 @@ def insert_sheet_data(spreadsheet_id: str, row: list) -> bool:
         sheet = client.open_by_key(spreadsheet_id).worksheet('Citas_agendadas')
         # Set row values to insert
         sheet.append_row(row)
-        # app.logger.info(f'Data saved: {row}')
+        app.logger.info(f'Data saved: {row}')
         return True  # Register successfully
     except:
-        #app.logger.error(f'Error saving data: {row}')
+        app.logger.error(f'Error saving data: {row}')
         return False  # Error register
     
 def insert_sheet_data_schedule(spreadsheet_id: str, row: list) -> bool:
