@@ -4,9 +4,12 @@ CANCEL = 'Cancelada'
 DONE = 'Realizada'
 BREACH = 'Incumplimiento'
 
-# ID of the sheet to handle CRUD of appointments
-# APPOINTMENTS_SHEET_ID = '13IogyxGONgFFCOlz5U2z1aLHz6BfSXKddrIoboqB6H4'
+# TEST SHEETS
+#APPOINTMENTS_SHEET_ID = '1upmJc9iMk4mK8V_O0BxO5t-F-blGwPpy_xwcOG30IMQ'
+
+# Production SHEETS
 APPOINTMENTS_SHEET_ID = '1CC9G-tmXDXmaoc-ceSHvb8gBLb7K_v9wiuWFEkeEfk8'
+
 ID_SCHEDULES_SHEET = "Horarios"
 ID_APPOINTMENTS_SHEET = "Citas_agendadas"
 
