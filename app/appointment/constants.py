@@ -14,10 +14,8 @@ TYPE_MAPPING = {
     "1": "Vacunación",
     "2": "Desparasitación",
     "3": "Consulta médica",
-    "4": "Baño y peluquería",
-    "5": "Exámenes de laboratorio",
-    "6": "Profilaxis",
-    "7": "Otros"
+    "4": "Exámenes de laboratorio",
+    "5": "Otros"
 }
 
 TIME_MAPPING_WEEKEND = {
