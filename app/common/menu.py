@@ -248,5 +248,4 @@ def is_datetime_available(scheduleModel:ScheduleModel ) -> bool:
     for entry in schedule:
         if (entry.date == scheduleModel.date and entry.time_init == scheduleModel.time_init and entry.time_end == scheduleModel.time_end):
             return False  # The date and time are already scheduled
-
     return True  # The date and time are available

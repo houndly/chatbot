@@ -44,8 +44,8 @@ def insert_sheet_data(spreadsheet_id: str, row: list) -> bool:
         sheet.append_row(row)
         app.logger.info(f'Data saved: {row}')
         return True  # Register successfully
-    except:
-        app.logger.error(f'Error saving data: {row}')
+    except Exception as e:
+        app.logger.error(f'Error saving data: {row}. Error: {e}')
         return False  # Error register
     
 def insert_sheet_data_schedule(spreadsheet_id: str, row: list) -> bool:

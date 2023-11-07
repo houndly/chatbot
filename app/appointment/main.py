@@ -14,6 +14,9 @@ from app.common.sheets import (
 import app.common.constants as cm
 from app.appointment.mapper import session_to_appointment, session_to_schedule
 from datetime import datetime, date, timedelta
+from app.appointment.constants import PENDING, TYPE_MAPPING, TIME_MAPPING_WEEKLY, TIME_MAPPING_WEEKEND
+
+import random
 from app import app
 
 
@@ -272,5 +275,20 @@ def create_new_appointment(appointment_data) -> bool:
     Registers an appointment with the veterinarian
     """
     new_row = appointment_data
-    is_register = insert_sheet_data(APPOINTMENTS_SHEET_ID, new_row)
+    # Generate a random id
+    new_row['id'] = random.randint(1, 99999)    
+    new_row['document_id']  = 0
+    new_row['time'] = TIME_MAPPING_WEEKLY[appointment_data['time']]
+    new_row['type'] = TYPE_MAPPING[appointment_data['type']]
+
+
+    # # Convert dictionary to list
+    row_values = [new_row['id'], new_row['owner_name'], new_row['pet_name'], new_row['phone'], new_row['document_id'], new_row['date'], new_row['time'], new_row['type'], new_row['state']]
+    # schedule =  get_schedules()
+    # for entry in schedule:
+    #     if (entry.date == scheduleModel.date and entry.time_init == scheduleModel.time_init and entry.time_end == scheduleModel.time_end):
+    #         return False  # The date and time are already scheduled
+    # return True  # The date and time are available
+
+    is_register = insert_sheet_data(APPOINTMENTS_SHEET_ID, row_values)
     return is_register  # New appointment register successfully or not

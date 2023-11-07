@@ -59,11 +59,13 @@ def appointmentsForWeek():
     appointments_data = get_week_appointments()
     return jsonify(appointments_data)
 
+
 @app.route("/api/appointment", methods=["POST"])
 def CreateAppointment():
     try:
         appointment_data = request.get_json()
         created_appointment = create_new_appointment(appointment_data)  
+        
         return jsonify(created_appointment), 201  # 201 significa 'Creado' en el estándar HTTP
     except Exception as e:
         return jsonify({"error": str(e)}), 400  # 400 significa 'Solicitud incorrecta' en el estándar HTTP
